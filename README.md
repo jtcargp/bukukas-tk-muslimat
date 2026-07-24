@@ -128,6 +128,26 @@ git commit -m "Add annual school-year reports"
 git push origin main
 ```
 
+## Pembaruan performa dan pembatalan pengeluaran
+
+Jalankan `setupSpreadsheet()` sekali setelah memasang `Code.gs` terbaru. Fungsi ini:
+
+- menambahkan kolom `REQUEST_ID` pada `PEMBAYARAN`;
+- memigrasikan `PENGELUARAN` menjadi:
+  `ID, TANGGAL, KATEGORI, KETERANGAN, NOMINAL, STATUS, ALASAN_BATAL, DIBATALKAN_PADA, CREATED_AT, UPDATED_AT`;
+- mempertahankan seluruh data lama dengan status `AKTIF`.
+
+Pembayaran memakai `requestId` unik sehingga pengiriman ulang request yang sama tidak membuat duplikasi. Frontend memiliki timeout 25 detik dan tombol **Periksa Status** apabila koneksi berhenti sebelum response diterima.
+
+Pengeluaran tidak lagi dihapus permanen. Action `batalkanPengeluaran` mengubah status menjadi `DIBATALKAN`, menyimpan alasan dan waktu pembatalan, serta mempertahankan histori. Pengeluaran tersebut tidak dihitung dalam dashboard, rekap, saldo, atau laporan.
+
+Service worker menggunakan cache `buku-kas-b2-v8`. `index.html`, `app.js`, dan `style.css` memakai network-first, sedangkan API Apps Script tidak pernah disimpan dalam cache.
+
+Untuk membersihkan cache lama di HP:
+
+- Android Chrome: **Setelan → Setelan situs → Penyimpanan → pilih situs → Hapus data**, lalu buka kembali aplikasi.
+- iPhone Safari: **Settings → Safari → Advanced → Website Data → cari domain GitHub Pages → Delete**. Jika aplikasi dipasang di Home Screen, hapus ikon lama lalu tambahkan kembali setelah membuka versi terbaru di Safari.
+
 ## Memasang di HP
 
 ### Android / Chrome
