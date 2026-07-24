@@ -1,4 +1,4 @@
-const CACHE_NAME = 'buku-kas-b2-v1';
+const CACHE_NAME = 'buku-kas-b2-v2';
 const APP_FILES = ['./', './index.html', './style.css', './app.js', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', event => {
