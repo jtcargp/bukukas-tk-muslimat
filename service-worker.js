@@ -1,4 +1,4 @@
-const CACHE_NAME = 'buku-kas-b2-v8';
+const CACHE_NAME = 'buku-kas-v-simple-login-1';
 const STATIC_FILES = ['./icon.svg', './manifest.json'];
 const NETWORK_FIRST_FILES = new Set(['/', '/index.html', '/app.js', '/style.css']);
 
