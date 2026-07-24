@@ -64,7 +64,7 @@ Selama URL belum diisi, aplikasi berjalan dalam mode demo dan menyimpan data uji
 
 Karena service worker memerlukan HTTPS, fitur pemasangan PWA akan aktif pada GitHub Pages dan tidak selalu aktif jika file dibuka langsung dari penyimpanan HP.
 
-Untuk memperbarui GitHub Pages, unggah atau push semua file yang berubah ke branch yang dipakai Pages. Tunggu proses Pages selesai, lalu tutup dan buka kembali aplikasi. Cache PWA sudah dinaikkan ke versi `v2`.
+Untuk memperbarui GitHub Pages, unggah atau push semua file yang berubah ke branch yang dipakai Pages. Tunggu proses Pages selesai, lalu tutup dan buka kembali aplikasi. Cache PWA sudah dinaikkan ke versi `v3`.
 
 ## Menguji pembayaran multi-bulan
 
@@ -87,6 +87,46 @@ Pilihan **Pilih Manual** memungkinkan beberapa checkbox bulan dipilih secara beb
 5. Tekan **Buat PDF** atau **Unduh PDF**, lalu pilih **Save as PDF** pada dialog cetak browser.
 6. Periksa ukuran A4 portrait, perpindahan halaman, header tabel, dan tidak adanya navigasi aplikasi pada hasil PDF.
 7. Tekan **Bagikan** pada browser yang mendukung Web Share API. Jika tidak didukung, aplikasi menampilkan petunjuk menggunakan Unduh PDF.
+
+## Laporan tahun ajaran
+
+Menu **Laporan** sekarang memiliki dua pilihan:
+
+- **Tahun Ajaran** sebagai pilihan utama, mencakup Juli sampai Juni.
+- **Bulanan** untuk mempertahankan laporan satu bulan yang sudah tersedia.
+
+Tahun ajaran dibuat dinamis dari data pembayaran, pemasukan, dan pengeluaran, dengan tahun sebelum, saat ini, dan sesudahnya tetap tersedia.
+
+Laporan tahunan membedakan dua angka berikut:
+
+- **Penerimaan Kas Aktual**: pembayaran siswa dikelompokkan berdasarkan `ID_GRUP` dan dihitung satu kali pada tanggal uang diterima. Nilai ini dipakai untuk arus kas dan saldo nyata.
+- **Alokasi Pembayaran Bulanan**: setiap baris pembayaran dihitung pada `BULAN` dan `TAHUN` peruntukannya. Nilai ini dipakai untuk status lunas dan alokasi kas setiap bulan.
+
+Contoh pembayaran 12 bulan sebesar Rp120.000 pada Juli:
+
+- Penerimaan aktual Juli adalah Rp120.000.
+- Alokasi pembayaran Juli sampai Juni masing-masing Rp10.000.
+- Saldo akhir hanya menambahkan Rp120.000 satu kali, bukan menambahkan Rp120.000 aktual dan Rp120.000 alokasi.
+
+PDF tahun ajaran memuat ringkasan arus kas aktual, pembayaran diterima di muka, rekap 12 bulan, tabel penerimaan aktual, status pembayaran per bulan, seluruh pemasukan lain, dan seluruh pengeluaran dalam satu dokumen.
+
+Setelah memperbarui `Code.gs`, deploy ulang sebagai versi baru melalui **Deploy → Manage deployments → Edit → New version → Deploy**. Action tahunan yang tersedia:
+
+- `getLaporanTahunAjaran`
+- `getRekapBulananTahunAjaran`
+- `getPenerimaanKasAktual`
+- `getAlokasiPembayaranBulanan`
+- `getPemasukanTahunAjaran`
+- `getPengeluaranTahunAjaran`
+- `getSaldoAwalTahunAjaran`
+
+Untuk mengirim revisi frontend ke GitHub:
+
+```bash
+git add index.html style.css app.js Code.gs README.md
+git commit -m "Add annual school-year reports"
+git push origin main
+```
 
 ## Memasang di HP
 
