@@ -21,7 +21,7 @@
 <body>
   <section class="auth-screen" id="authScreen">
     <div class="auth-card">
-      <div class="auth-logo">B2</div><span class="overline">Cerdas dan Mandiri</span><h1>Buku Kas Kelas</h1><p>Masuk sebagai bendahara kelas.</p>
+      <h1>Buku Kas Kelas</h1><p>Masuk sebagai bendahara kelas.</p>
       <form id="loginForm">
         <label>Username<input id="loginUsername" autocomplete="username" required></label>
         <label>Password<div class="password-field"><input id="loginPassword" type="password" autocomplete="current-password" required><button id="togglePassword" type="button" aria-label="Tampilkan password">◉</button></div></label>
@@ -102,7 +102,7 @@
         </header>
         <div class="transaction-total card"><span id="transactionTotalLabel">Total pemasukan</span><strong id="transactionTotal">Rp0</strong></div>
         <div class="transaction-cards ledger" id="transactionCards"></div>
-        <button class="fab" id="addTransaction" aria-label="Tambah transaksi">＋</button>
+        <button class="fab" id="addTransaction" aria-label="Tambah transaksi"><span aria-hidden="true">＋</span></button>
       </section>
 
       <section class="page" id="page-recap">
@@ -184,7 +184,7 @@
   <div class="sheet-backdrop" id="sheetBackdrop"></div>
   <section class="bottom-sheet payment-multi-sheet" id="paymentSheet" role="dialog" aria-modal="true" aria-labelledby="paymentSheetTitle">
     <div class="sheet-handle"></div>
-    <div class="sheet-heading"><div><span class="overline">Pembayaran kas</span><h2 id="paymentSheetTitle">Catat pembayaran</h2></div><button class="close-sheet" type="button">×</button></div>
+    <div class="sheet-heading"><div><span class="overline">Pembayaran kas</span><h2 id="paymentSheetTitle">Catat pembayaran</h2></div><button class="close-sheet" type="button" aria-label="Tutup"><span class="close-icon" aria-hidden="true">×</span></button></div>
     <form id="paymentForm">
       <input type="hidden" id="paymentRecordId">
       <label class="student-search-label">Nama siswa
@@ -218,7 +218,7 @@
 
   <section class="bottom-sheet" id="transactionSheet" role="dialog" aria-modal="true" aria-labelledby="transactionSheetTitle">
     <div class="sheet-handle"></div>
-    <div class="sheet-heading"><div><span class="overline" id="transactionSheetType">Pemasukan</span><h2 id="transactionSheetTitle">Tambah transaksi</h2></div><button class="close-sheet" type="button">×</button></div>
+    <div class="sheet-heading"><div><span class="overline" id="transactionSheetType">Pemasukan</span><h2 id="transactionSheetTitle">Tambah transaksi</h2></div><button class="close-sheet" type="button" aria-label="Tutup"><span class="close-icon" aria-hidden="true">×</span></button></div>
     <form id="transactionForm">
       <input type="hidden" id="transactionId"><input type="hidden" id="transactionType">
       <label>Tanggal<input id="transactionDate" type="date" required></label>
@@ -231,7 +231,7 @@
 
   <section class="bottom-sheet short" id="cancelExpenseSheet" role="dialog" aria-modal="true" aria-labelledby="cancelExpenseTitle">
     <div class="sheet-handle"></div>
-    <div class="sheet-heading"><div><span class="overline">Konfirmasi</span><h2 id="cancelExpenseTitle">Batalkan Pengeluaran</h2></div><button class="close-sheet" type="button">×</button></div>
+    <div class="sheet-heading"><div><span class="overline">Konfirmasi</span><h2 id="cancelExpenseTitle">Batalkan Pengeluaran</h2></div><button class="close-sheet" type="button" aria-label="Tutup"><span class="close-icon" aria-hidden="true">×</span></button></div>
     <div class="cancel-expense-detail" id="cancelExpenseDetail"></div>
     <form id="cancelExpenseForm">
       <input type="hidden" id="cancelExpenseId">
@@ -242,7 +242,7 @@
 
   <section class="bottom-sheet short" id="monthSheet" role="dialog" aria-modal="true" aria-labelledby="monthSheetTitle">
     <div class="sheet-handle"></div>
-    <div class="sheet-heading"><h2 id="monthSheetTitle">Pilih bulan aktif</h2><button class="close-sheet" type="button">×</button></div>
+    <div class="sheet-heading"><h2 id="monthSheetTitle">Pilih bulan aktif</h2><button class="close-sheet" type="button" aria-label="Tutup"><span class="close-icon" aria-hidden="true">×</span></button></div>
     <div class="month-grid" id="monthGrid"></div>
   </section>
 
