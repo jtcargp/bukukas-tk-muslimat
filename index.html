@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#4f8a64">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Kas B2">
+  <meta name="description" content="Buku Kas Kelas B2 – Cerdas dan Mandiri">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <title>Buku Kas Kelas B2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="mobile-app">
+    <main>
+      <section class="page active" id="page-home">
+        <header class="home-header">
+          <div><span class="overline">Buku Kas</span><h1>Kelas B2 <small>Cerdas dan Mandiri</small></h1></div>
+          <span class="online-dot" id="connectionDot" title="Status koneksi"></span>
+        </header>
+        <button class="month-switcher" id="homeMonthButton"><span><small>Bulan aktif</small><strong id="homeMonthLabel">Juli 2026</strong></span><b>Ganti ›</b></button>
+
+        <article class="balance-card">
+          <span>Saldo kas saat ini</span>
+          <strong id="homeBalance">Rp0</strong>
+          <small>Seluruh pemasukan dikurangi pengeluaran</small>
+        </article>
+        <div class="mini-summary">
+          <article><span class="summary-icon income">↓</span><small>Pemasukan bulan ini</small><strong id="homeIncome">Rp0</strong></article>
+          <article><span class="summary-icon expense">↑</span><small>Pengeluaran bulan ini</small><strong id="homeExpense">Rp0</strong></article>
+        </div>
+
+        <article class="card payment-overview">
+          <div class="section-heading"><div><span class="overline">Pembayaran kas</span><h2>Ringkasan bulan ini</h2></div><strong id="homePercent">0%</strong></div>
+          <div class="progress"><span id="homeProgress"></span></div>
+          <div class="payment-counts"><div><b id="homePaid">0</b><span>Sudah bayar</span></div><div><b id="homeUnpaid">0</b><span>Belum bayar</span></div></div>
+        </article>
+
+        <section class="quick-section">
+          <div class="section-heading"><h2>Aksi cepat</h2></div>
+          <div class="quick-actions">
+            <button data-quick="payment"><span>✓</span>Catat Pembayaran</button>
+            <button data-quick="income"><span>＋</span>Tambah Pemasukan</button>
+            <button data-quick="expense"><span>−</span>Tambah Pengeluaran</button>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-heading"><h2>Transaksi terbaru</h2><button class="text-button" data-go="transactions">Lihat semua</button></div>
+          <div class="transaction-cards" id="latestTransactions"></div>
+        </section>
+      </section>
+
+      <section class="page" id="page-payments">
+        <header class="sticky-page-header">
+          <div class="page-title"><div><span class="overline">Kas bulanan</span><h1>Pembayaran</h1></div><span class="fee-chip">Rp10.000</span></div>
+          <div class="filter-row">
+            <label class="select-field"><span>Bulan</span><select id="paymentMonth"></select></label>
+            <label class="select-field"><span>Tahun ajaran</span><select id="schoolYear"></select></label>
+          </div>
+          <label class="search-field"><span>⌕</span><input id="studentSearch" type="search" placeholder="Cari nama siswa…"></label>
+          <div class="segmented" id="paymentFilters">
+            <button class="active" data-filter="all">Semua</button><button data-filter="paid">Sudah Bayar</button><button data-filter="unpaid">Belum Bayar</button>
+          </div>
+        </header>
+        <div class="list-summary"><span id="paymentResultCount">0 siswa</span><span id="paymentSummaryText"></span></div>
+        <div class="student-cards" id="studentCards"></div>
+      </section>
+
+      <section class="page" id="page-transactions">
+        <header class="sticky-page-header compact">
+          <div class="page-title"><div><span class="overline">Catatan kas</span><h1>Transaksi</h1></div></div>
+          <div class="segmented large" id="transactionTabs">
+            <button class="active" data-tab="income">Pemasukan</button><button data-tab="expense">Pengeluaran</button>
+          </div>
+          <label class="month-filter"><span>Filter bulan</span><input type="month" id="transactionMonth"></label>
+        </header>
+        <div class="transaction-total card"><span id="transactionTotalLabel">Total pemasukan</span><strong id="transactionTotal">Rp0</strong></div>
+        <div class="transaction-cards ledger" id="transactionCards"></div>
+        <button class="fab" id="addTransaction" aria-label="Tambah transaksi">＋</button>
+      </section>
+
+      <section class="page" id="page-recap">
+        <header class="sticky-page-header compact">
+          <div class="page-title"><div><span class="overline">Ringkasan kas</span><h1>Rekap</h1></div></div>
+          <div class="filter-row">
+            <label class="select-field"><span>Bulan</span><select id="recapMonth"></select></label>
+            <label class="select-field"><span>Tahun</span><select id="recapYear"></select></label>
+          </div>
+        </header>
+        <div class="recap-grid">
+          <article class="card"><small>Kas siswa</small><strong id="recapCash">Rp0</strong></article>
+          <article class="card"><small>Pemasukan lain</small><strong id="recapOther">Rp0</strong></article>
+          <article class="card"><small>Pengeluaran</small><strong class="red" id="recapExpense">Rp0</strong></article>
+          <article class="card accent"><small>Saldo bulan</small><strong id="recapBalance">Rp0</strong></article>
+        </div>
+        <article class="card recap-progress">
+          <div class="section-heading"><div><span class="overline">Pembayaran</span><h2 id="recapPaymentTitle">0 dari 0 siswa</h2></div><strong id="recapPercent">0%</strong></div>
+          <div class="progress"><span id="recapProgressBar"></span></div>
+          <div class="payment-counts"><div><b id="recapPaid">0</b><span>Sudah bayar</span></div><div><b id="recapUnpaid">0</b><span>Belum bayar</span></div></div>
+        </article>
+        <div class="accordions">
+          <details class="card"><summary><span><b>✓</b> Siswa sudah bayar</span><em id="paidBadge">0</em></summary><ul id="paidList"></ul></details>
+          <details class="card"><summary><span><b class="orange">!</b> Siswa belum bayar</span><em id="unpaidBadge">0</em></summary><ul id="unpaidList"></ul></details>
+        </div>
+        <section class="monthly-recap">
+          <div class="section-heading"><h2>Rekap bulanan</h2></div>
+          <div id="monthlyRecapCards"></div>
+        </section>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Menu utama">
+      <button class="active" data-page="home"><span>⌂</span><small>Beranda</small></button>
+      <button data-page="payments"><span>✓</span><small>Pembayaran</small></button>
+      <button data-page="transactions"><span>⇄</span><small>Transaksi</small></button>
+      <button data-page="recap"><span>▤</span><small>Rekap</small></button>
+    </nav>
+  </div>
+
+  <div class="sheet-backdrop" id="sheetBackdrop"></div>
+  <section class="bottom-sheet" id="paymentSheet" role="dialog" aria-modal="true" aria-labelledby="paymentSheetTitle">
+    <div class="sheet-handle"></div>
+    <div class="sheet-heading"><div><span class="overline">Pembayaran kas</span><h2 id="paymentSheetTitle">Catat pembayaran</h2></div><button class="close-sheet" type="button">×</button></div>
+    <form id="paymentForm">
+      <input type="hidden" id="paymentStudentId"><input type="hidden" id="paymentRecordId">
+      <div class="student-display"><span id="studentInitial">A</span><div><small>Nama siswa</small><strong id="paymentStudentName"></strong></div></div>
+      <label>Untuk bulan<input id="paymentDisplayMonth" readonly></label>
+      <label>Tanggal pembayaran<input id="paymentDate" type="date" required></label>
+      <label>Nominal<input id="paymentAmount" type="text" inputmode="numeric" value="10.000" required></label>
+      <button class="primary-button" id="savePayment" type="submit">Simpan Pembayaran</button>
+      <button class="danger-button hidden" id="cancelPayment" type="button">Batalkan Pembayaran</button>
+    </form>
+  </section>
+
+  <section class="bottom-sheet" id="transactionSheet" role="dialog" aria-modal="true" aria-labelledby="transactionSheetTitle">
+    <div class="sheet-handle"></div>
+    <div class="sheet-heading"><div><span class="overline" id="transactionSheetType">Pemasukan</span><h2 id="transactionSheetTitle">Tambah transaksi</h2></div><button class="close-sheet" type="button">×</button></div>
+    <form id="transactionForm">
+      <input type="hidden" id="transactionId"><input type="hidden" id="transactionType">
+      <label>Tanggal<input id="transactionDate" type="date" required></label>
+      <label>Kategori<input id="transactionCategory" maxlength="60" placeholder="Contoh: Donasi" required></label>
+      <label>Keterangan<textarea id="transactionDescription" maxlength="200" placeholder="Tulis keterangan singkat" required></textarea></label>
+      <label>Nominal<input id="transactionAmount" type="text" inputmode="numeric" placeholder="Rp0" required></label>
+      <button class="primary-button" type="submit">Simpan Transaksi</button>
+    </form>
+  </section>
+
+  <section class="bottom-sheet short" id="monthSheet" role="dialog" aria-modal="true" aria-labelledby="monthSheetTitle">
+    <div class="sheet-handle"></div>
+    <div class="sheet-heading"><h2 id="monthSheetTitle">Pilih bulan aktif</h2><button class="close-sheet" type="button">×</button></div>
+    <div class="month-grid" id="monthGrid"></div>
+  </section>
+
+  <div class="confirm-overlay" id="confirmOverlay">
+    <div class="confirm-box"><h2 id="confirmTitle">Konfirmasi</h2><p id="confirmMessage"></p><div><button id="confirmNo">Tidak</button><button id="confirmYes">Ya, lanjutkan</button></div></div>
+  </div>
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+  <div class="skeleton-overlay" id="loadingOverlay"><div class="phone-skeleton"><i></i><i></i><i></i><i></i></div></div>
+  <script src="app.js"></script>
+</body>
+</html>

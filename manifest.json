@@ -1,0 +1,19 @@
+{
+  "name": "Buku Kas Kelas B2 – Cerdas dan Mandiri",
+  "short_name": "Kas B2",
+  "description": "Aplikasi pencatatan kas bulanan Kelas B2.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f5f3",
+  "theme_color": "#4f8a64",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
