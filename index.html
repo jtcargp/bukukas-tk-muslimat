@@ -82,6 +82,9 @@
           <div class="segmented large" id="transactionTabs">
             <button class="active" data-tab="income">Pemasukan</button><button data-tab="expense">Pengeluaran</button>
           </div>
+          <div class="segmented expense-status-filter hidden" id="expenseStatusFilter">
+            <button class="active" data-expense-filter="active">Aktif</button><button data-expense-filter="cancelled">Dibatalkan</button><button data-expense-filter="all">Semua</button>
+          </div>
           <label class="month-filter"><span>Filter bulan</span><input type="month" id="transactionMonth"></label>
         </header>
         <div class="transaction-total card"><span id="transactionTotalLabel">Total pemasukan</span><strong id="transactionTotal">Rp0</strong></div>
@@ -195,6 +198,7 @@
       </div>
       <div class="duplicate-notice hidden" id="duplicateNotice"></div>
       <div class="sheet-sticky-actions"><button class="secondary-button close-sheet" type="button">Batal</button><button class="primary-button" id="savePayment" type="submit">Simpan Pembayaran</button></div>
+      <button class="secondary-button check-status-button hidden" id="checkPaymentStatus" type="button">Periksa Status</button>
       <button class="danger-button hidden" id="cancelPayment" type="button">Batalkan Pembayaran</button>
     </form>
   </section>
@@ -209,6 +213,17 @@
       <label>Keterangan<textarea id="transactionDescription" maxlength="200" placeholder="Tulis keterangan singkat" required></textarea></label>
       <label>Nominal<input id="transactionAmount" type="text" inputmode="numeric" placeholder="Rp0" required></label>
       <button class="primary-button" type="submit">Simpan Transaksi</button>
+    </form>
+  </section>
+
+  <section class="bottom-sheet short" id="cancelExpenseSheet" role="dialog" aria-modal="true" aria-labelledby="cancelExpenseTitle">
+    <div class="sheet-handle"></div>
+    <div class="sheet-heading"><div><span class="overline">Konfirmasi</span><h2 id="cancelExpenseTitle">Batalkan Pengeluaran</h2></div><button class="close-sheet" type="button">×</button></div>
+    <div class="cancel-expense-detail" id="cancelExpenseDetail"></div>
+    <form id="cancelExpenseForm">
+      <input type="hidden" id="cancelExpenseId">
+      <label>Alasan pembatalan<textarea id="cancelExpenseReason" maxlength="200" placeholder="Tuliskan alasan pembatalan" required></textarea></label>
+      <div class="cancel-expense-actions"><button class="secondary-button close-sheet" type="button">Kembali</button><button class="danger-button" type="submit">Batalkan Pengeluaran</button></div>
     </form>
   </section>
 
