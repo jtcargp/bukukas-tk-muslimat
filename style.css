@@ -29,3 +29,72 @@ form select{width:100%;min-height:52px;padding:12px;border:1px solid var(--line)
 
 .student-search-label{position:relative}.student-combobox{position:relative}.student-combobox>input[type=search]{padding-left:42px;padding-right:42px}.combo-search-icon,.combo-arrow{position:absolute;top:15px;z-index:2;color:var(--muted);pointer-events:none}.combo-search-icon{left:14px;font-size:21px}.combo-arrow{right:15px;font-size:20px}.student-option-list{position:absolute;z-index:15;top:58px;left:0;right:0;max-height:240px;overflow-y:auto;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 12px 28px rgba(32,56,40,.16);overscroll-behavior:contain}.student-option{width:100%;min-height:48px;padding:10px 14px;border:0;border-bottom:1px solid var(--line);background:#fff;color:var(--text);display:flex;align-items:center;justify-content:space-between;text-align:left;font-size:15px}.student-option:last-child{border-bottom:0}.student-option:hover,.student-option:focus,.student-option.selected{background:var(--green-soft);color:var(--green-dark)}.student-option-check{font-weight:800;color:var(--green)}.student-option-empty{padding:18px 14px;color:var(--muted);text-align:center}.sheet-sticky-actions{grid-template-columns:110px minmax(0,1fr);gap:12px}.sheet-sticky-actions .secondary-button,.sheet-sticky-actions .primary-button{width:100%;min-height:54px;border-radius:14px;font-size:15px;display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden}.sheet-sticky-actions .secondary-button{min-width:100px;padding:0 18px}.report-type-tabs{margin:0 0 14px}.annual-allocation-note{margin:10px 0;padding:10px;border-radius:10px;background:#f3f7f4;color:var(--muted);font-size:12px}.report-table-wrap{overflow-x:auto}.report-subtotal{margin:4px 0 12px;text-align:right;font-weight:700}
 @media(max-width:359px){.sheet-sticky-actions{display:flex;flex-direction:column-reverse}.sheet-sticky-actions .secondary-button,.sheet-sticky-actions .primary-button{width:100%}}
+
+/* Payment student cards — visual refinement only */
+.student-cards{gap:12px}
+.student-card{
+  padding:18px;
+  border-radius:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,.05);
+  animation:studentCardIn 250ms ease both;
+}
+.student-card-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+.student-card .avatar{
+  flex:0 0 43px;
+}
+.student-card .student-name{
+  flex:1 1 auto;
+  min-width:0;
+  padding-top:1px;
+}
+.student-card .student-name strong{
+  display:-webkit-box;
+  overflow:hidden;
+  white-space:normal;
+  text-overflow:ellipsis;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  line-clamp:2;
+  line-height:1.35;
+}
+.student-card .student-name small{
+  margin-top:4px;
+}
+.student-card .status-badge{
+  flex:0 0 auto;
+  margin-right:6px;
+  padding:8px 14px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+.student-card .student-action{
+  margin-top:16px;
+  padding-top:16px;
+}
+.student-card .student-action button{
+  width:110px;
+  min-width:110px;
+  min-height:46px;
+  margin-right:6px;
+  padding:0 16px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.student-card .student-action button:active{
+  transform:scale(.98);
+}
+@keyframes studentCardIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media(prefers-reduced-motion:reduce){
+  .student-card{animation:none}
+  .student-card .student-action button:active{transform:none}
+}
