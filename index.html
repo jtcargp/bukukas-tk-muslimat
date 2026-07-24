@@ -19,12 +19,25 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="mobile-app">
+  <section class="auth-screen" id="authScreen">
+    <div class="auth-card">
+      <div class="auth-logo">B2</div><span class="overline">Cerdas dan Mandiri</span><h1>Buku Kas Kelas</h1><p>Masuk sebagai bendahara kelas.</p>
+      <form id="loginForm">
+        <label>Username<input id="loginUsername" autocomplete="username" required></label>
+        <label>Password<div class="password-field"><input id="loginPassword" type="password" autocomplete="current-password" required><button id="togglePassword" type="button" aria-label="Tampilkan password">◉</button></div></label>
+        <p class="login-error hidden" id="loginError"></p>
+        <button class="primary-button" id="loginButton" type="submit">Masuk</button>
+      </form>
+    </div>
+  </section>
+  <section class="auth-splash" id="authSplash"><div class="spinner"></div><strong>Memeriksa sesi...</strong></section>
+  <div class="mobile-app hidden" id="mobileApp">
     <main>
       <section class="page active" id="page-home">
         <header class="home-header">
-          <div><span class="overline">Buku Kas</span><h1>Kelas B2 <small>Cerdas dan Mandiri</small></h1></div>
-          <span class="online-dot" id="connectionDot" title="Status koneksi"></span>
+          <div><span class="overline">Buku Kas</span><h1><span id="activeClassTitle">Kelas</span> <small>Cerdas dan Mandiri</small></h1></div>
+          <button class="profile-button" id="profileButton" type="button" aria-label="Profil pengguna"><span class="online-dot" id="connectionDot"></span></button>
+          <div class="profile-menu hidden" id="profileMenu"><strong id="profileName"></strong><small id="profileClass"></small><button id="logoutButton" type="button">Logout</button></div>
         </header>
         <button class="month-switcher" id="homeMonthButton"><span><small>Bulan aktif</small><strong id="homeMonthLabel">Juli 2026</strong></span><b>Ganti ›</b></button>
 
@@ -94,7 +107,7 @@
 
       <section class="page" id="page-recap">
         <header class="sticky-page-header compact">
-          <div class="page-title"><div><span class="overline">Ringkasan kas</span><h1>Rekap</h1></div></div>
+          <div class="page-title"><div><span class="overline">Ringkasan kas</span><h1 id="recapClassTitle">Rekap Kas Kelas</h1></div></div>
           <div class="filter-row">
             <label class="select-field"><span>Bulan</span><select id="recapMonth"></select></label>
             <label class="select-field"><span>Tahun</span><select id="recapYear"></select></label>
