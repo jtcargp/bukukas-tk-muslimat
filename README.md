@@ -148,6 +148,42 @@ Untuk membersihkan cache lama di HP:
 - Android Chrome: **Setelan → Setelan situs → Penyimpanan → pilih situs → Hapus data**, lalu buka kembali aplikasi.
 - iPhone Safari: **Settings → Safari → Advanced → Website Data → cari domain GitHub Pages → Delete**. Jika aplikasi dipasang di Home Screen, hapus ikon lama lalu tambahkan kembali setelah membuka versi terbaru di Safari.
 
+## Login multi-kelas sederhana
+
+Jalankan `setupSpreadsheet()` satu kali setelah memasang `Code.gs`. Sistem hanya
+memerlukan sheet `USER` dengan struktur:
+
+```text
+USERNAME | PASSWORD | KELAS
+bendahara.b2 | b22026 | B2
+bendahara.b1 | b12026 | B1
+```
+
+Password disimpan sebagai teks biasa sesuai kebutuhan aplikasi sederhana ini.
+Ganti akun contoh sebelum dipakai. Tidak ada role admin, token, session sheet,
+hash password, atau sheet kelas.
+
+Kelas siswa ditentukan dari awalan ID, misalnya `B2-01` dan `B1-01`.
+`PEMBAYARAN` mengikuti kelas dari `ID_SISWA`. `PEMASUKAN` dan `PENGELUARAN`
+memiliki kolom `KELAS`, yang otomatis diisi dari akun yang sedang login.
+
+Browser hanya menyimpan tiga nilai berikut agar refresh tidak meminta login lagi:
+
+```text
+bukuKasLogin
+bukuKasUsername
+bukuKasKelas
+```
+
+Logout menghapus ketiganya dari perangkat. Backend tetap mencocokkan username
+dengan sheet `USER` pada setiap request dan hanya mengembalikan data kelas akun.
+
+Untuk data versi lama, jalankan `migrateDataLamaKeB2()` satu kali. Fungsi ini
+memberi ID `B2-xx` pada siswa lama, memperbarui referensi pembayaran, dan
+menetapkan pemasukan serta pengeluaran lama ke kelas B2.
+
+Setelah itu deploy versi baru Apps Script, lalu push frontend ke GitHub Pages.
+
 ## Memasang di HP
 
 ### Android / Chrome
