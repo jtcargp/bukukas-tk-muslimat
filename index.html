@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#4f8a64">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Kas B2">
@@ -61,7 +62,7 @@
       <section class="page" id="page-payments">
         <header class="sticky-page-header">
           <div class="page-title"><div><span class="overline">Kas bulanan</span><h1>Pembayaran</h1></div><span class="fee-chip">Rp10.000</span></div>
-          <button class="primary-button payment-entry-button" id="openMultiPayment">＋ Input Pembayaran</button>
+          <button class="primary-button payment-entry-button" id="openMultiPayment" type="button">＋ Input Pembayaran</button>
           <div class="filter-row">
             <label class="select-field"><span>Bulan</span><select id="paymentMonth"></select></label>
             <label class="select-field"><span>Tahun ajaran</span><select id="schoolYear"></select></label>
@@ -122,11 +123,15 @@
           <div class="page-title"><div><span class="overline">Dokumen kas</span><h1>Laporan</h1></div></div>
         </header>
         <article class="card report-form-card">
-          <div class="section-heading"><div><span class="overline">Laporan bulanan</span><h2>Siapkan laporan PDF</h2></div></div>
+          <div class="section-heading"><div><span class="overline" id="reportFormEyebrow">Laporan tahun ajaran</span><h2>Siapkan laporan PDF</h2></div></div>
           <form id="reportForm">
+            <div class="segmented large report-type-tabs" id="reportTypeTabs">
+              <button type="button" data-report-type="monthly">Bulanan</button>
+              <button type="button" class="active" data-report-type="annual">Tahun Ajaran</button>
+            </div>
             <div class="filter-row report-period">
-              <label class="select-field"><span>Bulan</span><select id="reportMonth"></select></label>
-              <label class="select-field"><span>Tahun</span><select id="reportYear"></select></label>
+              <label class="select-field" id="reportMonthField"><span>Bulan</span><select id="reportMonth"></select></label>
+              <label class="select-field"><span>Tahun ajaran</span><select id="reportYear"></select></label>
             </div>
             <label>Nama kelas<input id="reportClass" value="Kelas B2" required></label>
             <label>Nama bendahara<input id="reportTreasurer" placeholder="Nama bendahara kelas" required></label>
@@ -134,6 +139,19 @@
             <button class="primary-button" type="submit">Preview Laporan</button>
           </form>
         </article>
+        <section class="report-mobile-summary" id="reportMobileSummary">
+          <div class="recap-grid">
+            <article class="card"><small>Total pemasukan</small><strong id="reportSummaryIncome">Rp0</strong></article>
+            <article class="card"><small>Total pengeluaran</small><strong class="red" id="reportSummaryExpense">Rp0</strong></article>
+            <article class="card accent report-balance-card"><small>Saldo akhir</small><strong id="reportSummaryBalance">Rp0</strong></article>
+          </div>
+          <article class="card recap-progress">
+            <div class="section-heading"><div><span class="overline">Pembayaran siswa</span><h2 id="reportPaymentCount">0 sudah · 0 belum</h2></div><strong id="reportPaymentPercent">0%</strong></div>
+            <div class="progress"><span id="reportPaymentProgress"></span></div>
+          </article>
+          <article class="card report-compact-list"><div class="section-heading"><h2>Pembayaran siswa</h2></div><div id="reportStudentList"></div></article>
+          <article class="card report-compact-list"><div class="section-heading"><h2>Pengeluaran</h2></div><div id="reportExpenseList"></div></article>
+        </section>
         <div class="report-help card"><span>▤</span><p><strong>PDF siap cetak A4</strong><small>Preview terlebih dahulu, lalu pilih Print / Save as PDF pada browser HP.</small></p></div>
       </section>
     </main>
@@ -142,8 +160,8 @@
       <button class="active" data-page="home"><span>⌂</span><small>Beranda</small></button>
       <button data-page="payments"><span>✓</span><small>Pembayaran</small></button>
       <button data-page="transactions"><span>⇄</span><small>Transaksi</small></button>
+      <button data-page="reports"><span>▥</span><small>Laporan</small></button>
       <button data-page="recap"><span>▤</span><small>Rekap</small></button>
-      <button data-page="reports"><span>□</span><small>Laporan</small></button>
     </nav>
   </div>
 
@@ -154,8 +172,13 @@
     <form id="paymentForm">
       <input type="hidden" id="paymentRecordId">
       <label class="student-search-label">Nama siswa
-        <input id="paymentStudentSearch" type="search" placeholder="Cari nama siswa…" autocomplete="off">
-        <select id="paymentStudentId" size="4" aria-label="Pilih siswa aktif"></select>
+        <div class="student-combobox" id="studentCombobox">
+          <span class="combo-search-icon" aria-hidden="true">⌕</span>
+          <input id="paymentStudentSearch" type="search" placeholder="Cari nama siswa..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="studentOptionList">
+          <span class="combo-arrow" aria-hidden="true">⌄</span>
+          <input type="hidden" id="paymentStudentId">
+          <div class="student-option-list hidden" id="studentOptionList" role="listbox"></div>
+        </div>
       </label>
       <label>Tanggal pembayaran<input id="paymentDate" type="date" required></label>
       <fieldset class="period-fieldset"><legend>Periode pembayaran</legend><div class="period-options" id="periodOptions">
@@ -164,6 +187,7 @@
       <label>Bulan mulai<select id="paymentStartMonth"></select></label>
       <fieldset class="month-check-fieldset"><legend>Bulan yang dibayar</legend><div class="month-checkboxes" id="paymentMonthChecks"></div></fieldset>
       <label>Nominal per bulan<input id="paymentAmount" type="text" inputmode="numeric" value="10.000" required></label>
+      <label>Metode pembayaran<select id="paymentMethod"><option value="Tunai">Tunai</option><option value="Transfer">Transfer</option></select></label>
       <div class="payment-calculation"><span>Jumlah bulan <b id="paymentMonthCount">1 bulan</b></span><span>Total pembayaran <strong id="paymentTotal">Rp10.000</strong></span></div>
       <label>Keterangan (opsional)<textarea id="paymentNotes" maxlength="200" placeholder="Contoh: Dibayar sekaligus"></textarea></label>
       <div class="payment-review" id="paymentReview">
